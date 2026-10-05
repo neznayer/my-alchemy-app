@@ -32,7 +32,7 @@ export default Cloudflare.Worker(
           return HttpServerResponse.empty({ status: 201 });
         }
 
-        const object = yield* bucket.get(key);
+        const object = yield* bucket.get(key).pipe(Effect.withSpan("load.key"));
 
         if (object === null) {
           return HttpServerResponse.text("Not found", { status: 404 });
