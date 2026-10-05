@@ -1,4 +1,5 @@
 import * as Cloudflare from "alchemy/Cloudflare";
+import { Layer } from "effect";
 import * as Effect from "effect/Effect";
 import { HttpServerRequest } from "effect/http/HttpServerRequest";
 import * as HttpServerResponse from "effect/http/HttpServerResponse";
@@ -11,6 +12,9 @@ export default Cloudflare.Worker(
     main: import.meta.url,
     dev: {
       port: 3000,
+    },
+    compatibility: {
+      date: "2026-08-25",
     },
   },
   Effect.gen(function* () {
@@ -43,5 +47,7 @@ export default Cloudflare.Worker(
         ),
       ),
     };
-  }).pipe(Effect.provide(Cloudflare.R2.ReadWriteBucketBinding)),
+  }).pipe(
+    Effect.provide(Layer.mergeAll(Cloudflare.R2.ReadWriteBucketBinding, Cloudflare.Telemetry())),
+  ),
 );

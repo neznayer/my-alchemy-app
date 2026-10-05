@@ -9,4 +9,11 @@ create "admin" user with
 This will be a root user profile, with ability to add tokens, so treat it like one. DON'T use it for everyday tasks like `alchemy dev`, only for
 the github stack.
 
-set Global token, set the scopes ,
+set Global token, set the scopes. Apart from the User Write access as written in the tutorial, there is need to Write Secrets store!
+
+# Telemetry
+
+- need to provide Cloudflare.Telemetry() layer to the Worker's pipe.
+- need "Workers Observability Telemetry Write" permission to the deploy token (set in the github.ts)
+
+> need to rerun `bun alchemy deploy --config stacks/github.ts --profile admin` every time the permission for the deploy token is changed - so the new token gets written to the gh.
