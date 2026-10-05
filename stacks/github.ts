@@ -5,6 +5,10 @@ import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 import * as Redacted from "effect/Redacted";
 
+/**
+ * Stack for Github setup
+ * Creates api token and sets it and accountId to the Github repo's secrets.
+ */
 export default Alchemy.Stack(
   "github",
   {
@@ -14,6 +18,9 @@ export default Alchemy.Stack(
   Effect.gen(function* () {
     const { accountId } = yield* yield* Cloudflare.CloudflareEnvironment;
 
+    /**
+     * Create apiToken for the PR preview env
+     */
     const apiToken = yield* Cloudflare.ApiToken.AccountApiToken("CIToken", {
       accountId,
       policies: [
@@ -28,6 +35,7 @@ export default Alchemy.Stack(
             "Pages Write",
             "Account Settings Write",
             "Workers Tail Read",
+            "Workers Observability Telemetry Write",
           ],
           resources: {
             [`com.cloudflare.api.account.${accountId}`]: "*",
@@ -36,6 +44,9 @@ export default Alchemy.Stack(
       ],
     });
 
+    /**
+     * Write apiToken and accountId to GitHub secrets
+     */
     yield* GitHub.Secret("cf-api-token", {
       owner: "neznayer",
       repository: "my-alchemy-app",
