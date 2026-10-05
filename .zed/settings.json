@@ -1,0 +1,47 @@
+{
+  "format_on_save": "on",
+  "colorize_brackets": true,
+
+  "languages": {
+    "TypeScript": {
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": false,
+      },
+      "language_servers": [
+        "biome",
+        "effect-tsgo",
+        "!vtsls",
+        "!typescript-language-server",
+        "!oxlint",
+        "!oxfmt",
+        "...",
+      ],
+      "use_on_type_format": false,
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true,
+      },
+    },
+    "TSX": {
+      "format_on_save": "on",
+
+      "language_servers": [
+        "biome",
+        "effect-tsgo",
+        "!vtsls",
+        "!typescript-language-server",
+        "!oxlint",
+        "!oxfmt",
+        "...",
+      ],
+      "use_on_type_format": false,
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true,
+      },
+    },
+  },
+}
